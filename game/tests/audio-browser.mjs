@@ -1,0 +1,40 @@
+import {chromium} from 'playwright-core';
+import {spawn} from 'node:child_process';
+import {mkdir,writeFile,rm} from 'node:fs/promises';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+const base=process.env.GAME_URL||'http://127.0.0.1:5179',port=9338;
+await mkdir('../artifacts',{recursive:true});
+const chrome=spawn(process.env.CHROME_PATH||'C:/Program Files/Google/Chrome/Application/chrome.exe',[`--remote-debugging-port=${port}`,`--user-data-dir=${path.resolve('.audio-test-profile')}`,'--headless=new','--no-first-run','--no-default-browser-check','about:blank'],{stdio:'ignore'});
+let browser;const checks=[],errors=[];function pass(s){checks.push(s);console.log('PASS:',s);}
+try{
+ let endpoint;for(let i=0;i<70;i++){try{endpoint=await(await fetch(`http://127.0.0.1:${port}/json/version`)).json();break;}catch{await new Promise(r=>setTimeout(r,100));}}assert(endpoint,'Audio Chrome CDP unavailable');
+ browser=await chromium.connectOverCDP(endpoint.webSocketDebuggerUrl);const page=await browser.contexts()[0].newPage();page.on('pageerror',e=>errors.push(e.message));await page.setViewportSize({width:1200,height:1000});await page.goto(base);
+ await page.evaluate(()=>{localStorage.removeItem('skybound50:save');localStorage.removeItem('skybound50:v0.1.0');localStorage.removeItem('skybound50:v0.1');});await page.reload();await page.waitForFunction(()=>document.body.dataset.audioTimer!==undefined);
+ assert.equal(await page.locator('body').getAttribute('data-audio-timer'),'false');pass('No audio autoplays before explicit user activation');
+ await page.locator('#music-start').click();await page.waitForFunction(()=>document.body.dataset.audioTimer==='true');await page.waitForTimeout(700);assert(Number(await page.locator('body').getAttribute('data-audio-scheduled'))>0);pass('Real AudioContext resumes and schedules layered music after click');
+ await page.locator('#scene-choice').selectOption('city');await page.waitForFunction(()=>document.body.dataset.audioScene==='city');assert.equal(await page.locator('body').getAttribute('data-audio-timer'),'true');pass('Visual scene selection also switches music and ambience');
+ await page.locator('#settings-button').click();await page.waitForFunction(()=>document.body.dataset.audioTimer==='false');assert.equal(await page.locator('body').getAttribute('data-audio-voices'),'0');
+ await page.locator('#audio-test').click();await page.waitForFunction(()=>document.body.dataset.audioTimer==='true');
+ for(const cue of ['launch','speed','shield','blocked','pulse','near','crash','milestone','record','unlock','equip','transition']){await page.locator('#effect-choice').selectOption(cue);await page.locator('#effect-test').click();}
+ await page.locator('#music-volume').evaluate(el=>{el.value='0';el.dispatchEvent(new Event('input',{bubbles:true}));});await page.locator('#effects-volume').evaluate(el=>{el.value='43';el.dispatchEvent(new Event('input',{bubbles:true}));});await page.locator('#ambience-volume').evaluate(el=>{el.value='20';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.locator('#settings-close').click();await page.reload();await page.locator('#settings-button').click();assert.equal(await page.locator('#music-volume').inputValue(),'0');assert.equal(await page.locator('#effects-volume').inputValue(),'43');assert.equal(await page.locator('#ambience-volume').inputValue(),'20');pass('Separate music, action and environment volumes persist; all preview cues execute');
+ await page.setViewportSize({width:320,height:640});await page.locator('#audio-test').click();await page.locator('#effect-choice').selectOption('crash');await page.locator('#effect-test').click();await page.screenshot({path:'../artifacts/audio-settings-0.4.0.png',fullPage:true});await page.locator('#settings-close').click();assert.equal(await page.locator('#settings-panel').isVisible(),false);pass('Audio mixer and close button are reachable at 320px');
+ await page.setViewportSize({width:1200,height:1000});await page.locator('#start-button').click();await page.waitForFunction(()=>document.querySelector('#state-label').textContent==='航行中');await page.locator('#pause-button').click();await page.waitForFunction(()=>document.body.dataset.audioState==='suspended');assert.equal(await page.locator('body').getAttribute('data-audio-timer'),'false');assert.equal(await page.locator('body').getAttribute('data-audio-voices'),'0');
+ await page.locator('#resume-button').click();await page.waitForFunction(()=>document.body.dataset.audioTimer==='true');
+ await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));delete document.hidden;});await page.waitForFunction(()=>document.body.dataset.audioState==='suspended');assert.equal(await page.locator('body').getAttribute('data-audio-voices'),'0');pass('Pause, explicit resume and simulated background clean audio nodes and timer');
+ const offline=await page.evaluate(async()=>{
+  const {renderScore,renderEffect}=await import('./services/audio.js');const scenes=['cloud','orbit','city'],summary=[],clips=[];
+  function stats(data){let peak=0,power=0;for(const x of data){if(!Number.isFinite(x))throw Error('Nonfinite PCM');peak=Math.max(peak,Math.abs(x));power+=x*x;}return {peak,rms:Math.sqrt(power/data.length)};}
+  for(const scene of scenes){const c=new OfflineAudioContext(1,42*24000,24000);renderScore(c,c.destination,scene,'flight',0,1);const b=await c.startRendering(),data=b.getChannelData(0);summary.push({scene,...stats(data),tail:stats(data.subarray(41*24000)).peak});clips.push(Array.from(data.subarray(0,10*24000)));}
+  const cues=['ui','countdown','launch','near','speed','shield','pulse','blocked','crash','milestone','record','unlock','equip','transition','resume'],effects=[];
+  for(const cue of cues){const c=new OfflineAudioContext(1,24000,24000);renderEffect(c,c.destination,cue,0);const b=await c.startRendering();effects.push({cue,...stats(b.getChannelData(0))});}
+  // A clearly labelled concatenation of three ten-second excerpts, not a continuous gameplay recording.
+  const length=clips.length*10*24000,bytes=new Uint8Array(44+length*2),view=new DataView(bytes.buffer);function text(at,s){for(let i=0;i<s.length;i++)bytes[at+i]=s.charCodeAt(i);}text(0,'RIFF');view.setUint32(4,36+length*2,true);text(8,'WAVE');text(12,'fmt ');view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,1,true);view.setUint32(24,24000,true);view.setUint32(28,48000,true);view.setUint16(32,2,true);view.setUint16(34,16,true);text(36,'data');view.setUint32(40,length*2,true);
+  let index=0;for(const clip of clips)for(let i=0;i<clip.length;i++){const fade=Math.min(1,i/1200,(clip.length-1-i)/1200);view.setInt16(44+index++*2,Math.max(-1,Math.min(1,clip[i]*fade))*32767,true);}let raw='';for(let i=0;i<bytes.length;i+=16384)raw+=String.fromCharCode(...bytes.subarray(i,i+16384));return{summary,effects,wav:btoa(raw)};
+ });
+ for(const s of offline.summary){assert(s.peak>.01&&s.peak<.98,`${s.scene} clipping/silence`);assert(s.rms>.001);assert(s.tail<.0001,'Score should end cleanly');}assert(new Set(offline.summary.map(s=>s.rms.toFixed(6))).size===3);pass('All three full 40-second scores render finite nonzero PCM, distinct output, no clipping and silent tails');
+ for(const s of offline.effects){assert(s.peak>.001&&s.peak<.98,`${s.cue} clipping/silence`);}pass('All 15 action cues produce finite, nonzero, non-clipped PCM in real OfflineAudioContext');
+ await writeFile('../artifacts/三场景配乐试听-0.4.0.wav',Buffer.from(offline.wav,'base64'));delete offline.wav;
+ assert.deepEqual(errors,[]);await rm('../artifacts/audio-failure-0.4.0.txt',{force:true});await writeFile('../artifacts/audio-report-0.4.0.json',JSON.stringify({version:'0.4.0',checks,errors,offline,scope:'Chrome real WebAudio and offline PCM; no physical device or speaker listening verification'},null,2));
+}catch(e){await writeFile('../artifacts/audio-failure-0.4.0.txt',String(e.stack));throw e;}finally{if(browser)await browser.close();chrome.kill();}

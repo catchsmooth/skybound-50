@@ -1,0 +1,42 @@
+{
+  "version":"0.5.0",
+  "acceptance":"completed against local tests, real mini-game canvas and actual source-watch compile dispatch; physical device testing remains separate",
+  "unitTests":{"passed":147,"failed":0,"legacy400SeedSnapshotUnchanged":true},
+  "webExperienceChecks":{"passed":15,"entryRules":"retained legacy 0.4.0"},
+  "wechat":{
+    "devtoolsVersion":"2.02.2609250",
+    "baseLibrary":"3.17.5",
+    "runtimeBuildId":"2026-11-07T20:23:14.455Z",
+    "startupRuleset":"waves-v1",
+    "bounds":{"width":512,"height":891.4051282051282},
+    "arena":{"x":0,"y":131,"w":390,"h":679},
+    "liveCanvas":{"backingWidth":1170,"backingHeight":2532,"previewWidth":390,"previewHeight":844},
+    "finalMenuEvidence":"wechat-live-menu-0.5.0.png",
+    "pausedEvidence":"wechat-live-paused-0.5.0.png",
+    "legacyRecordObserved":22,
+    "newRulesRecordObserved":17.13,
+    "consoleErrorFilter":"",
+    "touchActions":{"tap":"success, menu/start/home observed","touchstart":"success receipt","touchmove":"success receipt","touchend":"success receipt"},
+    "limits":"Automation triggered the existing long-frame pause at tick zero; this round does not claim uninterrupted real-device gameplay or sound/performance certification. Earlier swipe automation timed out. Detailed waves, drag/release, collision, pause and storage behavior are covered by deterministic/VM tests."
+  },
+  "liveUpdate":{
+    "verified":true,
+    "job":"win-bash-309bc0318cd94a32",
+    "source":"game/src/**/*.ts",
+    "sequence":["fs.watch debounce 250ms","typecheck and emit to existing wechat-game/runtime","write game.js diagnostic build ID LAST","official simulator_refresh compiles/restarts mini-game in same project window"],
+    "proof":[
+      {"label":"联动验收","evidence":"wechat-round1-direct-canvas.png"},
+      {"label":"刷新实测","evidence":"wechat-live-refresh-probe.png","via":"normal simulator_refresh, no window close"},
+      {"label":"波次航行","evidence":"wechat-live-menu-0.5.0.png","via":"source restored, watcher recompiled and actual canvas verified"}
+    ],
+    "frontendScreenshotIssue":"simulator_screenshot frontend composition stayed on an old label while the actual #myCanvas contained updated source labels. The stale composition was not treated as source-update failure or accepted as fresh evidence.",
+    "verificationTool":"game/tools/capture-wechat-canvas.mjs reads appservice #myCanvas via official automation_evaluate and downscales to PNG without modifying the visible game canvas",
+    "removedWorkaround":"Project close/open workaround removed. Static analysis found a 3000ms close confirmation timer, making immediate open/reuse an invalid full-restart proof.",
+    "cliTimeoutMs":15000,
+    "gameStateRetained":false,
+    "watcherLeftRunning":true
+  },
+  "configAndLegacyProtection":{"evidence":"round1-config-check.json","projectConfigByteUnchanged":true,"privateConfigByteUnchanged":true,"legacyGameCoreByteUnchanged":true},
+  "preserved":["user AppID and private config","legacy save namespace and records","skins and total-flight unlocks","audio and control preferences","old GameCore compatibility snapshot"],
+  "notPerformed":["dependency installation","DSH modification","git commit or push","upload or publication","physical-device performance or listening test"]
+}

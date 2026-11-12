@@ -1,0 +1,5 @@
+{
+  "../wechat-game/project.config.json": "3a537c4a3d242fcfec993008fd82dcbf30c7153f58d444ef24a7417252b1c38e",
+  "../wechat-game/project.private.config.json": "aaa5c66c331798228b199e3455a94f6f844f1ad40b70677c44c57a6d59275066",
+  "src/core/game.ts": "7b40ca731c743d110f5d45e4808e54a530c6d9a199a7d13e6231356e21ac10d9"
+}

@@ -1,0 +1,20 @@
+// Read the live mini-game screen, bypassing DevTools' frontend freeze/compositor screenshot.
+import {spawnSync} from 'node:child_process';
+import {writeFileSync,mkdirSync} from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const project=path.resolve(root,'../wechat-game');
+const output=path.resolve(root,process.argv[2]||'../artifacts/wechat-live-canvas.png');
+const fnSource="function(){const d=this.document,c=d&&d.getElementById('myCanvas');if(!c)return {found:false};const o=d.createElement('canvas');o.width=390;o.height=Math.round(c.height*390/c.width);o.getContext('2d').drawImage(c,0,0,o.width,o.height);return {found:true,backingWidth:c.width,backingHeight:c.height,previewWidth:o.width,previewHeight:o.height,png:o.toDataURL('image/png')};}";
+const result=spawnSync(process.execPath,[path.join(root,'tools/wechat-ide.mjs'),'automation_evaluate',JSON.stringify({project,fnSource})],{cwd:root,encoding:'utf8',timeout:20000,maxBuffer:8000000});
+process.stderr.write(result.stderr||'');
+if(result.error)throw result.error;
+if(result.status!==0)throw Error(result.stdout||'Official canvas evaluation failed');
+const receipt=JSON.parse(result.stdout),data=receipt.result?.result;
+if(receipt.ok!==true||!data?.found||!data.png?.startsWith('data:image/png;base64,'))throw Error('No live mini-game canvas PNG was returned');
+mkdirSync(path.dirname(output),{recursive:true});
+writeFileSync(output,Buffer.from(data.png.split(',')[1],'base64'));
+delete data.png;
+writeFileSync(output.replace(/\.png$/i,'')+'.json',JSON.stringify({...data,source:'live appservice #myCanvas, downsampled read-only',capturedAt:new Date().toISOString()},null,2));
+console.log(JSON.stringify({path:output,...data}));

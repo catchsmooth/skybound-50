@@ -1,0 +1,335 @@
+@charset "UTF-8";
+:root{color-scheme:dark;--base:#0c1b27;--surface:#102638;--line:#294251;--ink:#edf2f3;--muted:#a8bec9;--aqua:#7de3ce;--gold:#ffc285;--sans:"Microsoft YaHei UI","PingFang SC",system-ui,sans-serif;--digits:"Bahnschrift","DIN Alternate",system-ui,sans-serif}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--base);color:var(--ink);font:14px/1.6 var(--sans)}
+button,input,select{font:inherit}
+button,a,input,select{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+button:disabled{cursor:default;opacity:.35}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--aqua);outline-offset:5px}
+button{transition:background .18s,opacity .18s}
+button:active:not(:disabled){opacity:.7}
+a{color:inherit;text-decoration:none}
+button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.5}
+[hidden]{display:none!important}
+.app-shell{max-width:1232px;margin:auto;padding:0 48px}
+.masthead{height:112px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.brand{display:flex;gap:14px;align-items:center}
+.brand>svg{width:41px;height:41px;color:var(--aqua)}
+.brand>span{font-size:21px;letter-spacing:4px;font-weight:600}
+.brand small{display:block;font-size:10px;font-weight:400;letter-spacing:2px;color:var(--muted);margin-top:3px}
+.header-actions{display:flex;align-items:center;gap:20px}
+.edition{font-size:12px;color:var(--muted);margin-right:18px}
+.quiet-button{border:1px solid var(--line);padding:10px 16px;background:transparent;color:var(--ink);min-height:44px;border-radius:6px}
+.quiet-button:hover:not(:disabled),.icon-button:hover{background:var(--line)}
+.icon-button{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink)}
+.flight-layout{display:grid;grid-template-columns:minmax(240px,1fr) minmax(400px,584px);gap:70px;padding:44px 0 32px;align-items:center}
+.route-mark{color:var(--aqua);font-size:12px;display:flex;align-items:center;gap:10px}
+.route-mark>span{width:25px;height:1px;background:var(--aqua)}
+h1{font-size:clamp(30px,3.4vw,44px);font-weight:500;letter-spacing:1px;line-height:1.45;margin:18px 0 20px}
+.lead{color:var(--muted);line-height:1.9}
+.record-block{margin:32px 0 22px;padding-top:24px;border-top:1px solid var(--line)}
+.record-block>span,.flight-objective>span,.aircraft-choice>span{font-size:11px;color:var(--muted);letter-spacing:1px}
+.record-block>div{display:flex;align-items:baseline;gap:8px}
+.record-block strong{font:400 44px/1.5 var(--digits);font-variant-numeric:tabular-nums}
+.record-block>small,.aircraft-choice>small{color:var(--muted);font-size:11px;display:block}
+.flight-objective{position:relative;max-width:260px}
+.flight-objective>strong{position:absolute;right:0;top:-5px;font:24px var(--digits)}
+.flight-objective strong small{font:11px var(--sans);color:var(--muted)}
+.objective-line{height:2px;background:var(--line);margin:15px 0 8px}
+.objective-line>i{display:block;width:0;height:100%;background:var(--aqua);transition:width .2s}
+.flight-objective p{font-size:11px;color:var(--muted)}
+.aircraft-choice{margin-top:24px}
+.skin-options{display:flex;gap:8px;margin:8px 0}
+.skin{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:9px 18px;min-height:44px}
+.skin.selected{border-color:var(--aqua);color:var(--aqua)}
+.cockpit{min-width:0}
+.instrument-bar{height:68px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.instrument-bar>div:first-child>span{font-size:10px;display:block;color:var(--muted)}
+.instrument-bar strong{font:28px/1.2 var(--digits);font-variant-numeric:tabular-nums}
+.instrument-bar strong small{font-size:14px;color:var(--muted)}
+.sector-name{display:flex;gap:8px;align-items:center;font-size:11px;color:var(--muted)}
+.signal-dot,.flight-note i{width:5px;height:5px;background:var(--aqua);border-radius:50%;display:inline-block}
+kbd{font:10px var(--sans);color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:1px 4px;margin-left:4px}
+.arena{aspect-ratio:1;position:relative;overflow:hidden;border:1px solid #476375;border-radius:12px;background:#163148;isolation:isolate}
+.arena canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
+.arena-coordinates{position:absolute;top:18px;left:20px;right:20px;display:flex;justify-content:space-between;font:9px var(--digits);letter-spacing:1px;color:#b6ceda;pointer-events:none}
+.panel{position:absolute;left:10%;right:10%;top:50%;transform:translateY(-50%);text-align:center;padding:28px 24px 20px;border:1px solid #547386;background:rgba(12,32,47,.96);border-radius:12px;z-index:3}
+.menu-panel{top:auto;bottom:26px;transform:none;padding:19px 24px 16px;background:rgba(11,31,46,.92)}
+.panel-tag{font-size:10px;color:var(--aqua);letter-spacing:2px}
+.panel h2{font-size:23px;font-weight:500;margin:8px 0 10px}
+.panel p{font-size:12px;line-height:1.9;color:var(--muted);margin:8px 0 17px}
+.primary-button{border:none;background:var(--aqua);color:#102a2d;border-radius:6px;display:flex;justify-content:center;align-items:center;gap:22px;font-weight:600;padding:14px 24px;min-height:48px;width:100%}
+.primary-button:hover{background:#b0f2e2}
+.primary-button>span{font-size:21px;line-height:1}
+.panel-foot{display:block;font-size:9px;color:var(--muted);margin-top:12px;letter-spacing:1px}
+.text-button{border:0;background:none;color:var(--muted);padding:10px 8px;min-height:44px;font-size:12px}
+.text-button:hover{color:var(--ink)}
+.result-time{font:54px var(--digits)!important;margin:4px 0!important}
+.result-time small{font:12px var(--sans);margin-left:8px}
+.result-stats{display:flex;justify-content:center;gap:32px;font-size:11px;margin:12px 0 22px;color:var(--muted)}
+.result-stats b{color:var(--ink);font:18px var(--digits);margin-left:5px}
+.control-deck{position:relative;min-height:92px;margin-top:12px;background:#142b3a;border:1px solid var(--line);border-radius:9px;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;touch-action:none;user-select:none;overflow:hidden}
+.control-caption{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:11px;pointer-events:none}
+.control-caption svg{width:24px;height:24px;fill:none;stroke:var(--aqua);stroke-width:1}
+.keyboard-hint{text-align:center;pointer-events:none}
+.keyboard-hint>div{display:flex;margin-top:2px;gap:2px}
+.keyboard-hint kbd{display:inline-block;width:20px;height:20px;padding:0;line-height:20px}
+.touch-reticle{position:absolute;width:44px;height:44px;border:1px solid var(--aqua);border-radius:50%;transform:translate(-50%,-50%);display:none;pointer-events:none}
+.control-deck.active .touch-reticle{display:block}
+.control-deck.active .control-caption{opacity:.4}
+.flight-note{display:flex;justify-content:space-between;gap:10px;padding-top:14px;font-size:10px;color:var(--muted)}
+.flight-note i{margin-right:6px}
+footer{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:80px;border-top:1px solid var(--line);color:var(--muted);font-size:10px}
+footer .text-button{font-size:10px}
+.countdown{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;background:#0b223b66;pointer-events:none}
+.countdown strong{font:96px var(--digits);color:var(--aqua)}
+.countdown span{letter-spacing:3px;color:var(--ink);font-size:12px}
+.milestone{position:absolute;top:15%;left:0;right:0;text-align:center;font-size:16px;color:var(--aqua);pointer-events:none;opacity:0;transition:opacity .2s}
+.milestone.visible{opacity:1}
+.settings-panel{padding:20px 24px}
+.settings-panel h2{margin-bottom:16px}
+.setting-row{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:46px;border-bottom:1px solid var(--line);font-size:12px;text-align:left}
+.setting-row input{accent-color:var(--aqua);width:22px;height:22px;cursor:pointer}
+.setting-row select{padding:6px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:4px}
+.setting-note{font-size:10px!important}
+.about{max-width:680px;margin:20px auto 48px;border-top:1px solid var(--line);padding-top:20px}
+.about h2{font-size:22px;font-weight:500}
+.about p{font-size:13px;color:var(--muted);line-height:1.9}
+.direction-pad{display:flex;gap:8px}
+.direction-pad button{width:48px;height:48px;background:var(--surface);border:1px solid var(--line);color:var(--aqua);border-radius:6px;touch-action:none}
+.save-notice{color:var(--gold);font-size:12px;text-align:center}
+
+@media(min-width:1500px){.flight-layout{padding-top:60px;padding-bottom:48px;gap:100px}
+.app-shell{max-width:1300px}
+.arena{max-height:620px}
+}
+
+@media(max-width:950px){.app-shell{padding:0 28px}
+.flight-layout{gap:32px;grid-template-columns:minmax(180px,1fr) minmax(340px,1.5fr)}
+.header-actions{gap:10px}
+.edition{display:none}
+h1{font-size:30px}
+.panel{left:6%;right:6%}
+.menu-panel{bottom:18px;padding:16px}
+.menu-panel h2{font-size:20px}
+.menu-panel p{font-size:11px;margin-bottom:12px}
+.record-block{margin-top:20px}
+.flight-objective{max-width:220px}
+}
+
+@media(max-width:680px){.app-shell{padding:0 18px}
+.masthead{height:82px;padding-top:env(safe-area-inset-top)}
+.brand{gap:9px}
+.brand>svg{width:32px;height:32px}
+.brand>span{font-size:17px;letter-spacing:2px}
+.brand small{font-size:9px;letter-spacing:1px}
+.header-actions{gap:8px}
+.header-actions>.quiet-button{font-size:10px;padding:8px 10px}
+.flight-layout{display:flex;flex-direction:column;gap:6px;padding:22px 0 24px;align-items:stretch}
+.briefing{position:relative}
+.route-mark{font-size:10px}
+.briefing h1{font-size:24px;line-height:1.5;margin:8px 0 4px}
+.briefing h1 br{display:none}
+.lead{display:none}
+.record-block{position:absolute;right:0;top:0;border:0;padding:0;margin:0;text-align:right}
+.record-block>span{font-size:9px;letter-spacing:0}
+.record-block>div{justify-content:flex-end;gap:4px}
+.record-block strong{font-size:24px;line-height:1.2}
+.record-block>small{display:none}
+.flight-objective,.aircraft-choice{display:none}
+.cockpit{width:100%;max-width:520px;align-self:center}
+.instrument-bar{height:64px}
+.instrument-bar strong{font-size:24px}
+.arena{border-radius:8px}
+.arena-coordinates{top:11px;left:12px;right:12px;font-size:8px}
+.menu-panel{bottom:14px;left:6%;right:6%;padding:12px 16px}
+.menu-panel .panel-tag{font-size:9px}
+.menu-panel h2{font-size:19px;margin:4px 0}
+.menu-panel p{font-size:10px;line-height:1.6;margin:4px 0 10px}
+.panel-foot{font-size:8px;margin-top:8px;letter-spacing:0}
+.primary-button{min-height:46px;padding:10px 18px}
+.control-deck{min-height:88px;padding:14px 16px}
+.control-caption{font-size:10px;gap:9px}
+.keyboard-hint{display:none}
+.flight-note{font-size:9px}
+.panel{padding:18px}
+.panel h2{font-size:20px}
+.settings-panel{top:50%;padding:14px 18px}
+.settings-panel h2{margin:4px 0 8px;font-size:19px}
+.setting-row{min-height:39px;font-size:11px}
+.settings-panel .setting-note{font-size:9px!important;margin:9px 0}
+.sector-name{font-size:10px}
+.instrument-bar .quiet-button{padding:8px 12px;font-size:11px}
+footer{flex-wrap:wrap;justify-content:center;gap:0 18px;padding:14px 0 calc(14px + env(safe-area-inset-bottom));min-height:74px;font-size:9px}
+footer .text-button{width:100%;font-size:10px}
+.record-block>div>span{font-size:10px}
+.result-time{font-size:44px!important}
+}
+
+@media(max-width:360px){.briefing h1{font-size:21px}
+.record-block>span{font-size:8px}
+.panel p{font-size:10px}
+.panel h2{font-size:18px}
+.settings-panel .setting-row{min-height:34px}
+.setting-note{display:none}
+}
+
+.direction-pad{display:flex;gap:8px;align-items:center;margin-top:8px}
+.direction-pad button{width:44px;height:44px;background:var(--surface);border:1px solid var(--line);color:var(--aqua);border-radius:6px;touch-action:none}
+.direction-pad span{color:var(--muted);font-size:10px;margin-left:8px}
+@media(min-width:681px){.direction-pad{display:none}
+.masthead{height:90px}
+.flight-layout{grid-template-columns:minmax(220px,1fr) clamp(340px,calc(100svh - 380px),560px);padding:20px 0;gap:64px}
+.instrument-bar{height:60px}
+.control-deck{min-height:74px}
+.record-block{margin:24px 0 16px;padding-top:18px}
+.aircraft-choice{margin-top:18px}
+.flight-objective{max-width:260px}
+footer{min-height:64px}
+h1{font-size:clamp(30px,3.1vw,42px)}
+}
+
+.mobile-title{display:none}
+@media(max-width:680px){.desktop-title{display:none}
+.mobile-title{display:inline}
+.briefing h1{font-size:21px;max-width:calc(100% - 110px);margin:8px 0 0}
+.briefing h1 br{display:block}
+.record-block{top:23px}
+.menu-panel .panel-foot{display:none}
+.menu-panel{padding:12px 14px}
+.menu-panel h2{font-size:18px}
+.menu-panel p{font-size:10px}
+.direction-pad{justify-content:space-between}
+.direction-pad span{max-width:90px;font-size:9px}
+}
+
+.flight-toolbar{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}
+.mode-switch{display:flex;background:#142b3a;border:1px solid var(--line);padding:3px;border-radius:7px;gap:3px}
+.mode-switch button{min-height:44px;border:0;background:transparent;color:var(--muted);border-radius:4px;padding:6px 13px;font-size:12px}
+.mode-switch button[aria-pressed=true]{color:var(--aqua);background:#264753}
+.flight-toolbar .quiet-button{font-size:11px;padding:8px 12px}
+.route-selector{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;color:var(--muted)}
+.route-selector select{min-height:38px;max-width:75%;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 10px;border-radius:5px}
+.effect-bar{display:flex;justify-content:space-between;gap:8px;color:var(--aqua);font-size:9px;min-height:26px;align-items:center}
+.arena{touch-action:none}
+.sensitivity-row{flex-wrap:wrap;padding:9px 0}
+.sensitivity-row input[type=range]{width:100%;height:20px;margin:0}
+.sensitivity-row output{font-variant-numeric:tabular-nums;color:var(--aqua)}
+.aircraft-choice>strong{display:block;font-size:20px;font-weight:500;margin:5px 0}
+.aircraft-choice>p{font-size:11px;color:var(--muted);margin:0 0 8px}
+.hangar{padding:28px 0;border-top:1px solid var(--line);scroll-margin-top:20px}
+.hangar-heading{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.hangar h2{font-size:24px;font-weight:500;margin:6px 0}
+.hangar p{color:var(--muted);font-size:12px}
+.skin-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:24px}
+.skin-card{padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.skin-card.equipped{border-color:var(--aqua)}
+.skin-card.locked{border-style:dashed}
+.skin-card>svg{width:100%;height:100px;display:block}
+.skin-card h3{font-size:17px;margin:10px 0 4px}
+.skin-card p{font-size:10px;min-height:32px;margin:0}
+.skin-card progress{width:100%;height:4px;accent-color:var(--aqua);margin:12px 0}
+.skin-card>div{display:flex;gap:8px}
+.skin-card button{padding:8px;font-size:10px;flex:1}
+.hangar-note{font-size:11px!important}
+.briefing{min-width:0;align-self:stretch}
+@media(min-width:681px){.flight-layout{grid-template-columns:minmax(220px,1fr) clamp(340px,calc(100svh - 490px),530px)}
+.briefing h1{font-size:clamp(28px,3vw,40px)}
+}
+@media(max-width:680px){.flight-toolbar{margin-top:10px}
+.mode-switch button{font-size:11px;padding:6px 10px}
+.route-selector{font-size:10px}
+.effect-bar{font-size:8px}
+.skin-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.skin-card{padding:12px}
+.skin-card>svg{height:75px}
+.hangar h2{font-size:18px}
+.hangar-heading{align-items:flex-start;gap:8px}
+.hangar-heading .quiet-button{padding:8px;font-size:10px;white-space:nowrap}
+.settings-panel{max-height:calc(100% - 18px);overflow:auto}
+.flight-layout{padding-top:12px}
+.route-selector select{max-width:75%}
+}
+
+@media(max-width:680px){body[data-state]:not([data-state=menu]):not([data-state=result]) .briefing,body[data-state]:not([data-state=menu]):not([data-state=result]) .flight-toolbar,body[data-state]:not([data-state=menu]):not([data-state=result]) .route-selector{display:none}
+body[data-state]:not([data-state=menu]):not([data-state=result]) .masthead{height:64px}
+body[data-state]:not([data-state=menu]):not([data-state=result]) .flight-layout{padding-top:0}
+.cockpit .arena{max-width:min(100%,calc(100svh - 330px));margin-inline:auto}
+.effect-bar{margin-bottom:2px}
+}
+
+.audio-entry{display:flex;gap:10px;align-items:center;margin-top:8px}
+.audio-entry button{font-size:11px;padding:7px 10px;white-space:nowrap}
+.audio-entry span{font-size:9px;color:var(--muted)}
+.audio-mixer{border-bottom:1px solid var(--line);padding-bottom:12px}
+.audio-mixer>p{font-size:10px!important;margin:6px 0!important}
+.audio-mixer>.quiet-button{width:100%;font-size:11px}
+.sound-preview{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:10px}
+.sound-preview select{min-height:40px;min-width:0;flex:1;background:var(--surface);color:var(--ink);border:1px solid var(--line);padding:5px}
+.sound-preview button{padding:8px}
+.settings-panel{max-height:calc(100% - 20px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.settings-panel h2{font-size:20px}
+.route-mark b{font-weight:400}
+@media(max-width:680px){body[data-state]:not([data-state=menu]):not([data-state=result]) .audio-entry{display:none}
+.audio-entry span{font-size:8px}
+.audio-entry button{font-size:10px}
+.audio-mixer .setting-row{min-height:42px}
+}
+
+/* 0.4.0: the arena leads; preparation and review stay outside its action layer. */
+.countdown{gap:12px;padding:24px;pointer-events:auto;text-align:center;background:rgba(7,28,54,.88)}
+.countdown .launch-help{font-size:13px;line-height:1.8;letter-spacing:0;color:var(--ink)}
+.countdown .quiet-button{font-size:12px;min-height:44px}
+.countdown[data-quick=true] .launch-help{display:none}
+.countdown[data-quick=true] strong{font-size:36px}
+.flight-result{border-top:1px solid var(--line);padding:12px 0;margin-top:10px}
+.result-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.flight-result .result-time{margin:0;font:36px/1.2 var(--digits)!important}
+.flight-result .result-time small{font-size:12px;margin-left:6px}
+.flight-result .result-stats{display:flex;gap:16px;margin:0;font-size:12px}
+.flight-result p{font-size:12px;line-height:1.6;margin:8px 0;color:var(--muted)}
+.result-actions{display:flex;align-items:center;gap:12px}
+.result-actions .primary-button{flex:1;min-height:44px;padding:8px 16px}
+.result-actions .text-button{min-height:44px;margin:0;white-space:nowrap}
+body[data-state=result] .control-deck,body[data-state=result] .direction-pad,body[data-state=menu] .direction-pad{display:none}
+@media(min-width:681px){
+  .app-shell{max-width:1160px;padding-inline:32px}
+  .masthead{height:72px}
+  .flight-layout{grid-template-columns:minmax(180px,260px) minmax(340px,560px);justify-content:center;gap:48px;padding:16px 0}
+  .briefing{align-self:center}
+  .briefing h1{font-size:30px}
+  .cockpit{width:100%;min-width:0}
+  .cockpit .arena{width:100%;max-width:clamp(340px,calc(100svh - 400px),560px);max-height:none;margin-inline:auto}
+  .instrument-bar{height:54px}
+  .audio-entry{margin-top:4px}
+  .record-block{margin-top:20px}
+}
+@media(max-width:680px){
+  .masthead{height:64px}
+  .flight-layout{padding-top:10px}
+  .briefing{width:100%;align-self:stretch;min-height:54px}
+  .briefing h1{font-size:20px;max-width:calc(100% - 100px);margin:0;line-height:1.4;letter-spacing:0}
+  .briefing .route-mark{display:none}
+  .record-block{top:0}
+  .flight-toolbar{margin-top:0}
+  .audio-entry{display:none}
+  body[data-state=menu] .instrument-bar,body[data-state=menu] .effect-bar,body[data-state=menu] .control-deck{display:none}
+  body[data-state=menu] .cockpit .arena{margin-top:10px;max-width:min(100%,calc(100svh - 260px))}
+  .menu-panel .panel-foot{display:block;font-size:10px;line-height:1.5;letter-spacing:0;margin-top:8px}
+  .menu-panel p{font-size:12px}
+  .menu-panel h2{font-size:20px}
+  .panel .panel-tag{font-size:10px}
+  body[data-state=result] .briefing,body[data-state=result] .flight-toolbar,body[data-state=result] .route-selector{display:none}
+  body[data-state=result] .flight-layout{padding-top:0}
+  body[data-state=result] .cockpit .arena{max-width:min(100%,calc(100svh - 350px))}
+  .flight-result .result-time{font-size:32px!important}
+  .flight-result .panel-tag{font-size:10px}
+  .flight-result p{font-size:11px;margin:5px 0}
+  .flight-result{padding:8px 0;margin-top:8px}
+  .result-actions .primary-button{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}
+}
+

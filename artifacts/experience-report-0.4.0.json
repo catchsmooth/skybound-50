@@ -1,0 +1,24 @@
+{
+  "version": "0.4.0",
+  "at": "2026-11-07T20:04:46.142Z",
+  "base": "http://127.0.0.1:5179",
+  "checks": [
+    "375px menu: readable title, visible start and collision hint, no horizontal overflow",
+    "375px touch movement and release stop; controls in viewport",
+    "375px collision evidence shown; result does not cover arena; retry reachable",
+    "375px quick retry starts fresh with no residual touch movement",
+    "375px menu return, countdown pause/resume and simulated background pause",
+    "320px menu: readable title, visible start and collision hint, no horizontal overflow",
+    "320px touch movement and release stop; controls in viewport",
+    "320px collision evidence shown; result does not cover arena; retry reachable",
+    "320px quick retry starts fresh with no residual touch movement",
+    "320px menu return, countdown pause/resume and simulated background pause",
+    "Desktop arena enlarged to at least 395px at 1280x800",
+    "Landscape and tablet: no horizontal overflow",
+    "Existing schema2 scores, skin, mute and sensitivity retained; mobile settings reachable",
+    "Audio unlock and scheduling still work; pause clears scheduler",
+    "No browser page errors or failed assets"
+  ],
+  "errors": [],
+  "scope": "Ephemeral desktop Chrome with viewport/touch emulation; not physical mobile, listening or performance certification"
+}

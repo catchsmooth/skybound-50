@@ -1,0 +1,14 @@
+[
+  {
+    "file": "../wechat-game/project.config.json",
+    "unchanged": true
+  },
+  {
+    "file": "../wechat-game/project.private.config.json",
+    "unchanged": true
+  },
+  {
+    "file": "src/core/game.ts",
+    "unchanged": true
+  }
+]

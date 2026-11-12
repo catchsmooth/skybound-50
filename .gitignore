@@ -1,0 +1,7 @@
+game/node_modules/
+game/dist/
+game/.browser-test-profile/
+game/.audio-test-profile/
+.env
+.env.*
+*.log

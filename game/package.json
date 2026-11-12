@@ -1,0 +1,21 @@
+{
+  "name": "skybound-50",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs && node tools/build-wechat.mjs",
+    "build:wechat": "node tools/build-wechat.mjs",
+    "watch:wechat": "node tools/watch-wechat.mjs --refresh",
+    "test": "node --test --test-isolation=none tests/*.test.mjs",
+    "check": "tsc --noEmit",
+    "start": "node tools/serve.mjs",
+    "test:browser": "node tests/browser.mjs",
+    "test:experience": "node tests/experience-browser.mjs",
+    "test:audio": "node tests/audio-browser.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "playwright-core": "1.56.1"
+  }
+}

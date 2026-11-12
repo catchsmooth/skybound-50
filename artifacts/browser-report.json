@@ -1,0 +1,29 @@
+{
+  "version": "0.3.0",
+  "at": "2026-11-07T13:16:25.704Z",
+  "base": "http://127.0.0.1:5179",
+  "checks": [
+    "Desktop home renders 0.3.0",
+    "Countdown, keyboard input and pause time freeze",
+    "Resume advances simulation",
+    "Settings preserve pause, motion and quality controls",
+    "Real collision produces result, best record and frozen final time",
+    "Retry resets time",
+    "Record and preferences survive reload",
+    "Settings focused Escape and sound synchronization regressions",
+    "Version and privacy explanation opens and closes",
+    "375px, 320px and landscape have square arena and no horizontal overflow",
+    "Relative pointer control captures and releases cleanly",
+    "CDP touch start/move/end reach pointer controls",
+    "Simulated hidden-document event safely pauses (not a physical device test)",
+    "Locked skins can preview but not equip; selection persists",
+    "Mode best scores stay isolated",
+    "Three distinct selectable environments finish smooth transitions",
+    "Unlock threshold fixture enables advanced skins and saves equipment",
+    "Continuous sensitivity value persists",
+    "Mobile active cockpit keeps drag controls within viewport",
+    "No browser page errors or failed assets"
+  ],
+  "errors": [],
+  "scope": "Desktop Chrome emulation; not physical mobile or mini-game runtime"
+}

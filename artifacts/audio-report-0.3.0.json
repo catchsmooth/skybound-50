@@ -1,0 +1,114 @@
+{
+  "version": "0.3.0",
+  "checks": [
+    "No audio autoplays before explicit user activation",
+    "Real AudioContext resumes and schedules layered music after click",
+    "Visual scene selection also switches music and ambience",
+    "Separate music, action and environment volumes persist; all preview cues execute",
+    "Audio mixer and close button are reachable at 320px",
+    "Pause, explicit resume and simulated background clean audio nodes and timer",
+    "All three full 40-second scores render finite nonzero PCM, distinct output, no clipping and silent tails",
+    "All 15 action cues produce finite, nonzero, non-clipped PCM in real OfflineAudioContext"
+  ],
+  "errors": [],
+  "offline": {
+    "summary": [
+      {
+        "scene": "cloud",
+        "peak": 0.1817018687725067,
+        "rms": 0.030665566459920156,
+        "tail": 0
+      },
+      {
+        "scene": "orbit",
+        "peak": 0.18966072797775269,
+        "rms": 0.03047191412259719,
+        "tail": 0
+      },
+      {
+        "scene": "city",
+        "peak": 0.1547107845544815,
+        "rms": 0.0312116351825561,
+        "tail": 0
+      }
+    ],
+    "effects": [
+      {
+        "cue": "ui",
+        "peak": 0.163224995136261,
+        "rms": 0.026383114850627554
+      },
+      {
+        "cue": "countdown",
+        "peak": 0.07917594164609909,
+        "rms": 0.01808968483885815
+      },
+      {
+        "cue": "launch",
+        "peak": 0.17605257034301758,
+        "rms": 0.037252822420552
+      },
+      {
+        "cue": "near",
+        "peak": 0.09791665524244308,
+        "rms": 0.015836349452868353
+      },
+      {
+        "cue": "speed",
+        "peak": 0.17594167590141296,
+        "rms": 0.03701898106493344
+      },
+      {
+        "cue": "shield",
+        "peak": 0.1532001793384552,
+        "rms": 0.02567698957373178
+      },
+      {
+        "cue": "pulse",
+        "peak": 0.20505580306053162,
+        "rms": 0.0400651994045851
+      },
+      {
+        "cue": "blocked",
+        "peak": 0.1346857100725174,
+        "rms": 0.02095711170988431
+      },
+      {
+        "cue": "crash",
+        "peak": 0.24822047352790833,
+        "rms": 0.03940277312859385
+      },
+      {
+        "cue": "milestone",
+        "peak": 0.16870906949043274,
+        "rms": 0.037883267664404044
+      },
+      {
+        "cue": "record",
+        "peak": 0.15304450690746307,
+        "rms": 0.0409706296821889
+      },
+      {
+        "cue": "unlock",
+        "peak": 0.1622702032327652,
+        "rms": 0.04102886322496926
+      },
+      {
+        "cue": "equip",
+        "peak": 0.15266156196594238,
+        "rms": 0.026078835006630937
+      },
+      {
+        "cue": "transition",
+        "peak": 0.14727899432182312,
+        "rms": 0.02594319235599249
+      },
+      {
+        "cue": "resume",
+        "peak": 0.1610603630542755,
+        "rms": 0.03187624570760585
+      }
+    ]
+  },
+  "scope": "Chrome real WebAudio and offline PCM; no physical device or speaker listening verification"
+}
